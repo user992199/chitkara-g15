@@ -16,6 +16,10 @@ public:
 };
 
 void printlist(node* &head){
+	if(head == NULL){
+		cout<<"Linked List is empty\n";
+		return;
+	}
 	node * temp = head;
 	while(temp!=NULL){
 		cout<<temp->data<<" -> ";
@@ -133,24 +137,31 @@ void insertatmid(int d, node * &head, node * &tail){
 	}
 }
 
-void deleteatmid(node * &head, node * &tail){
-	if(head==NULL){
-		cout<<"Linked List is empty\n";
+void deleteatmid(node * &head, node *& tail){
+	if(head == NULL){
+		cout<<"Linked List is already empty\n";
+		return;
 	}else if(head == tail){
-		delete head;
-		// node * temp = head;
+		node * temp = head;
 		head = tail = NULL;
-	}
-	else{
-		node * fast = head->next->next;
-		node * slow = head;
-		while(fast != NULL && fast->next!=NULL && fast->next->next != NULL){
-			slow = slow->next;
-			fast = fast->next->next;
-		}
-		node *temp = slow -> next;
-		slow -> next = temp -> next;
 		delete temp;
+	}else{
+		node * prev = head;
+		node * fast = head;
+		node * slow = head;
+		while(fast->next!=NULL && fast->next->next!=NULL){
+			prev = slow;
+			fast = fast->next->next;
+			slow = slow->next;
+		}
+		if(slow == head){
+			head = slow->next;
+			delete slow;
+		}
+		else{
+			prev -> next = slow -> next;
+			delete slow;	
+		}
 	}
 }
 
