@@ -76,28 +76,17 @@ void deletefromend(node * &head, node * &tail){
 	}
 }
 
-void findmid(node * &head, node * &tail){
+node * findmid(node * &head){
 	if(head == NULL){
-		cout<<"Linked List is already empty\n";
+		return head;
 	}else{
-		// int count = 0;
-		// node * temp = head;
-		// while(temp->next!=NULL){
-		// 	count++;
-		// 	temp = temp -> next;
-		// }
-		// temp = head;
-		// count /= 2;
-		// while(count--){
-		// 	temp = temp -> next;
-		// }
 		node * fast = head;
 		node * slow = head;
 		while(fast->next!=NULL && fast->next->next!=NULL){
 			fast = fast->next->next;
 			slow = slow->next;
 		}
-		cout<<"Middle element has value: "<<slow->data<<endl;
+		return slow;
 	}
 }
 
@@ -166,6 +155,20 @@ node * merge2sortedll(node* head1, node* head2){
 	}
 }
 
+node * mergesortll(node * head1){
+	// base case
+	if(head1 ->next == NULL){
+		return head1;
+	}
+	// recursive case
+	node * mid = findmid(head1);
+	node * head2 = mid->next;
+	mid -> next = NULL;
+	head1 = mergesortll(head1);
+	head2 = mergesortll(head2);
+	return merge2sortedll(head1, head2);
+}
+
 int main(){
 	node * head1 = NULL, * tail1 = NULL;
 	node * head2 = NULL, * tail2 = NULL;
@@ -185,5 +188,18 @@ int main(){
 	printlist(head2);
 	printlist(head3);
 
+	node * head4 = NULL, * tail4 = NULL;
+
+	insertatend(12, head4, tail4);
+	insertatend(465, head4, tail4);
+	insertatend(1546, head4, tail4);
+	insertatend(11, head4, tail4);
+	insertatend(145, head4, tail4);
+	insertatend(132, head4, tail4);
+	insertatend(99, head4, tail4);
+
+	head4 = mergesortll(head4);
+
+	printlist(head4);
 	return 0;
 }
