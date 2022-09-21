@@ -4,9 +4,11 @@ class node{
 public:
 	int data;
 	node * next;
+	// node * prev;
 	node(int d){
 		data = d;
 		next = NULL;
+		// prev = NULL;
 	}
 };
 
@@ -161,12 +163,19 @@ node * mergesortll(node * head1){
 		return head1;
 	}
 	// recursive case
+	// divide the linked list into two serperate and independent parts
 	node * mid = findmid(head1);
 	node * head2 = mid->next;
 	mid -> next = NULL;
+	// sort the two divided linked lists seperately
 	head1 = mergesortll(head1);
 	head2 = mergesortll(head2);
+	// merge the two divided and sorted arrays into one
 	return merge2sortedll(head1, head2);
+}
+
+template <typename T> T add(T a, T b){
+	return a+b;
 }
 
 int main(){
@@ -184,9 +193,9 @@ int main(){
 
 	node * head3 = merge2sortedll(head1, head2), tail3 = NULL;
 
-	printlist(head1);
-	printlist(head2);
-	printlist(head3);
+	// printlist(head1);
+	// printlist(head2);
+	// printlist(head3);
 
 	node * head4 = NULL, * tail4 = NULL;
 
@@ -200,6 +209,10 @@ int main(){
 
 	head4 = mergesortll(head4);
 
-	printlist(head4);
+	// printlist(head4);
+
+	cout<<add<int>(5, 10)<<endl;
+	cout<<add<char>('a', 'c')<<endl;
+	cout<<add<double>(5.0, 10.0)<<endl;
 	return 0;
 }
